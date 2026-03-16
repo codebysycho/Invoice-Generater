@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProInvoice | Premium Invoice Generator</title>
+    <meta name="description" content="The most professional and elegant invoice generator for modern businesses. Create, customize, and download beautiful invoices in seconds.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- html2pdf library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Landing Page Section -->
+    <section id="landingPage" class="landing-page">
+        <div class="glow-blob blob-1"></div>
+        <div class="glow-blob blob-2"></div>
+        
+        <nav class="nav-minimal">
+            <div class="logo">
+                <i data-lucide="zap" class="logo-icon-premium"></i>
+                <span class="logo-text">Pro<span>Invoice</span></span>
+            </div>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#" class="btn-nav" id="startBtnNav">Create Now</a>
+            </div>
+        </nav>
+
+        <main class="hero">
+            <div class="hero-content">
+                <div class="badge">Version 2.0 is live</div>
+                <h1 class="hero-title">Invoicing <br><span class="gradient-text">Made Elegant.</span></h1>
+                <p class="hero-subtitle">The most professional way to bill your clients. Stunning designs, instant PDF generation, and mobile-first experience.</p>
+                <div class="hero-actions">
+                    <button class="btn-premium primary" id="startCreating">
+                        <span>Get Started for Free</span>
+                        <i data-lucide="arrow-right"></i>
+                    </button>
+                    <button class="btn-premium secondary">
+                        <i data-lucide="play-circle"></i>
+                        <span>See How it Works</span>
+                    </button>
+                </div>
+            </div>
+            <div class="hero-preview">
+                <div class="preview-card">
+                    <img id="previewImage" src="invoice_preview_hero_1773656678237.png" alt="Invoice Preview">
+                </div>
+            </div>
+        </main>
+    </section>
+
+    <!-- Editor Section (Initially Hidden) -->
+    <div id="editorScreen" class="editor-screen hidden">
+        <header class="editor-header">
+            <div class="editor-nav-left">
+                <button id="backToLanding" class="btn-icon-back">
+                    <i data-lucide="arrow-left"></i>
+                </button>
+                <div class="logo-sm">
+                    <i data-lucide="zap"></i>
+                    <span>ProInvoice</span>
+                </div>
+            </div>
+            <div class="editor-actions">
+                <div class="status-indicator">
+                    <span class="dot"></span>
+                    Ready to export
+                </div>
+                <button id="downloadBtn" class="btn-download">
+                    <i data-lucide="download"></i>
+                    <span>Export PDF</span>
+                </button>
+            </div>
+        </header>
+
+        <main class="editor-main">
+            <div class="editor-container">
+                <div class="invoice-paper" id="invoiceArea">
+                    <div class="paper-inner">
+                        <div class="invoice-header-v2">
+                            <div class="brand-box">
+                                <div class="editable-field h-brand" contenteditable="true" data-placeholder="YOUR COMPANY">YOUR COMPANY</div>
+                                <div class="editable-field h-sub" contenteditable="true" data-placeholder="Full Company Address">123 Design Street, Creative Valley</div>
+                                <div class="editable-field h-sub" contenteditable="true" data-placeholder="Contact Info">hello@yourcompany.com | +1 234 567 890</div>
+                            </div>
+                            <div class="invoice-label-box">
+                                <h1 class="label-text">INVOICE</h1>
+                                <div class="meta-v2">
+                                    <div class="meta-item">
+                                        <span class="m-label">Invoice ID</span>
+                                        <div class="m-value editable-field" contenteditable="true">#INV-2024-001</div>
+                                    </div>
+                                    <div class="meta-item">
+                                        <span class="m-label">Created At</span>
+                                        <div class="m-value editable-field" contenteditable="true" id="currentDate"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="billing-row">
+                            <div class="bill-col">
+                                <span class="v2-section-title">Recipient</span>
+                                <div class="editable-field v2-client-name" contenteditable="true" data-placeholder="Client Name">Client Name</div>
+                                <div class="editable-field v2-client-sub" contenteditable="true" data-placeholder="Client Address">Full Address, City</div>
+                                <div class="editable-field v2-client-sub" contenteditable="true" data-placeholder="Client Email">client@email.com</div>
+                            </div>
+                            <div class="bill-col align-right">
+                                <span class="v2-section-title">Payment Method</span>
+                                <div class="editable-field v2-client-name" contenteditable="true" data-placeholder="Bank Name / PayPal">Bank Transfer</div>
+                                <div class="editable-field v2-client-sub" contenteditable="true" data-placeholder="Account Name">Account: John Doe</div>
+                                <div class="editable-field v2-client-sub" contenteditable="true" data-placeholder="Account Details">IBAN: US12 3456 7890 0000</div>
+                                <div class="mt-4">
+                                    <span class="v2-section-title">Payment Due</span>
+                                    <div class="m-value editable-field" contenteditable="true" id="dueDate"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="services-shortcuts print-hidden" data-html2canvas-ignore="true">
+                            <span class="v2-section-title">Add Web Dev Services:</span>
+                            <div class="shortcut-tags">
+                                <button class="service-tag" data-service="Full Stack Development" data-price="2500">Full Stack</button>
+                                <button class="service-tag" data-service="UI/UX Design (Figma)" data-price="800">UI/UX Design</button>
+                                <button class="service-tag" data-service="React.js Single Page App" data-price="1200">React App</button>
+                                <button class="service-tag" data-service="API Integration & Backend" data-price="950">API / Backend</button>
+                                <button class="service-tag" data-service="E-commerce (WordPress/Shopify)" data-price="1500">E-commerce</button>
+                                <button class="service-tag" data-service="Bug Fixes & Maintenance" data-price="150">Maintenance</button>
+                            </div>
+                        </div>
+
+                        <div class="table-v2-wrapper">
+                            <table class="table-v2">
+                                <thead>
+                                    <tr>
+                                        <th class="v2-desc">Description</th>
+                                        <th class="v2-qty">Qty</th>
+                                        <th class="v2-rate">Price</th>
+                                        <th class="v2-total">Amount</th>
+                                        <th class="v2-action print-hidden" data-html2canvas-ignore="true"></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="invoiceItems">
+                                    <!-- Items added via JS -->
+                                </tbody>
+                            </table>
+                            <button id="addItemBtn" class="btn-add-item print-hidden" data-html2canvas-ignore="true">
+                                <i data-lucide="plus-circle"></i>
+                                <span>Add New Service</span>
+                            </button>
+                        </div>
+
+                        <div class="footer-v2">
+                            <div class="footer-col-left">
+                                <span class="v2-section-title">Notes</span>
+                                <div class="editable-field v2-notes" contenteditable="true" data-placeholder="Add your terms or notes here...">Payment via Bank Transfer would be appreciated. Thank you!</div>
+                            </div>
+                            <div class="footer-col-right">
+                                <div class="summary-v2">
+                                    <div class="summary-line">
+                                        <span>Subtotal</span>
+                                        <span id="subtotalValue">$0.00</span>
+                                    </div>
+                                    <div class="summary-line">
+                                        <span>Tax (0.00%)</span>
+                                        <span id="taxValue">$0.00</span>
+                                    </div>
+                                    <div class="summary-total">
+                                        <span>Balance Due</span>
+                                        <span id="totalValue">$0.00</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="watermark-v2">
+                            <span>Generated via ProInvoice</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
